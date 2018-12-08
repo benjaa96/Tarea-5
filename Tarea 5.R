@@ -50,10 +50,33 @@ ap <- function(t){
               Jarque_Bera=if(pval < 0.05){"Se rechaza la hipotesis nula"}else{"No se rechaza la hipotesis nula"})) 
 }
 
-y(1:110)
+ap(1:110)
 
+m <- function(r){
+  msft_o <- select(msft, open)
+  msft_c <- select(msft, close)
+  fecha <- select(msft, date)
+  n <- (msft_c[r,]-msft_o[r,])/msft_o[r,]
+  msft1 <- as.matrix(msft_o[r,])
+  Skew <- (sum((msft1 - mean(msft1))^3)/length(msft1))/(sum((msft1 - mean(msft1))^2)/length(msft1))^(3/2)
+  Kur <- length(msft1) * sum((msft1 - mean(msft1))^4)/(sum((msft1 - mean(msft1))^2)^2)
+  Jb <- (length(msft1)/6) * (Skew^2 + 0.25 * ((Kur - 3)^2))
+  pval <- 1 - pchisq(Jb, df = 2)
+  n2 <- retorno_fecha <- cbind(fecha[r,], n)             
+  freq_Acum <- cumsum(n$close)
+  i2 <- data.matrix(freq_Acum, rownames.force = NA)
+  retorno_fecha2 <- cbind(fecha[r,], i2)
+  retorno_fecha <- cbind(fecha[r,], n)
+  u <- log(msft_c[r,]/msft_o[r,])
+  retorno_fecha3 <- cbind(fecha[r,], u)                  
+  return(list(Retorno_variación=n2,
+              Retorno_log=retorno_fecha3,
+              ggplot(retorno_fecha2, aes(x = date, y = i2)) + geom_line(),
+              ggplot(retorno_fecha, aes(x = date, y = close)) + geom_line(),
+              Jarque_Bera=if(pval < 0.05){"Se rechaza la hipotesis nula"}else{"No se rechaza la hipotesis nula"}))
+}
 
-
+m(1:224)
 
 
 
@@ -208,8 +231,10 @@ REGSINSESGO1000 = ggplot(betas_data) +
 
 REGSINSESGO1000
 
+grid.arrange(REGSESGADA50, REGSINSESGO50,REGSESGADA100, REGSINSESGO100,  nrow=2, ncol=2)
 
-grid.arrange(REGSESGADA50, REGSINSESGO50,REGSESGADA100, REGSINSESGO100,REGSESGADA500, REGSINSESGO500,REGSESGADA1000, REGSINSESGO1000,  nrow=4, ncol=2)
+grid.arrange(REGSESGADA500, REGSINSESGO500,REGSESGADA1000, REGSINSESGO1000,  nrow=2, ncol=2)
+
 
 
 #3.C
@@ -358,4 +383,7 @@ REG_U_1000_SS = ggplot(betas_data_unif) +
 
 REG_U_1000_SS
 
-grid.arrange(REG_U_50_CS, REG_U_50_SS,REG_U_100_CS, REG_U_100_SS,REG_U_500_CS,REG_U_500_SS,REG_U_1000_CS, REG_U_1000_SS, nrow=4, ncol=2)
+grid.arrange(REG_U_50_CS, REG_U_50_SS,REG_U_100_CS, REG_U_100_SS, nrow=2, ncol=2)
+
+
+grid.arrange(REG_U_500_CS,REG_U_500_SS,REG_U_1000_CS, REG_U_1000_SS, nrow=2, ncol=2)
