@@ -64,7 +64,7 @@ ap <- function(t){
               Jarque_Bera=if(pval < 0.05){"Se rechaza la hipotesis nula"}else{"No se rechaza la hipotesis nula"})) 
 }
 
-ap(1:110)
+ap(1:224)
 
 ```
 
@@ -96,7 +96,7 @@ m <- function(r){
               ggplot(retorno_fecha, aes(x = date, y = close)) + geom_line(),
               Jarque_Bera=if(pval < 0.05){"Se rechaza la hipotesis nula"}else{"No se rechaza la hipotesis nula"}))
 }
-m(1:156)
+m(1:224)
 ```
 
 **Pregunta Numero 3**
@@ -405,7 +405,10 @@ REG_U_1000_SS = ggplot(betas_data_unif) +
 
 REG_U_1000_SS
 
-grid.arrange(REG_U_50_CS, REG_U_50_SS,REG_U_100_CS, REG_U_100_SS,REG_U_500_CS,REG_U_500_SS,REG_U_1000_CS, REG_U_1000_SS, nrow=4, ncol=2)  
+grid.arrange(REG_U_50_CS, REG_U_50_SS,REG_U_100_CS, REG_U_100_SS, nrow=2, ncol=2)
+
+
+grid.arrange(REG_U_500_CS,REG_U_500_SS,REG_U_1000_CS, REG_U_1000_SS, nrow=2, ncol=2) 
   
 
 
