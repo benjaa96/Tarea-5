@@ -411,6 +411,4 @@ grid.arrange(REG_U_50_CS, REG_U_50_SS,REG_U_100_CS, REG_U_100_SS, nrow=2, ncol=2
 
 grid.arrange(REG_U_500_CS,REG_U_500_SS,REG_U_1000_CS, REG_U_1000_SS, nrow=2, ncol=2) 
   
-
-
 ```
